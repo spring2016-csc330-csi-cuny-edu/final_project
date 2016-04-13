@@ -7,18 +7,8 @@ import manager.*;
 public class Driver {
 	static ApplianceManager home = new ApplianceManager();
 	
-	private static void addAppliance(Appliance a, String name){
-	}
-	
 	public static void main(String[] args){
-		//ApplianceManager home = new ApplianceManager();
-		//Map<Integer,String> appMap = new HashMap<Integer,String>();
-		
-		home.addAppliance(new SlicerAndDicerModel7(), "cool");		
-		//home.addAppliance(new SlicerAndDicerModel7());
-		//home.pushButton(((Blender)a).HIGH_SPEED);
-		
-		
-		//this is funn stuff right
+		home.addAppliance(SlicerAndDicerModel7.class, "cool");
+		home.pushButton("cool", Blender.HIGH_SPEED);
 	}
 }

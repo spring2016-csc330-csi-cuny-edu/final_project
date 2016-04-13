@@ -18,11 +18,23 @@ public class ApplianceManager {
 		//names = new ArrayList<String>();
 	}
 	
-	public void addAppliance(Appliance appliance, String name){
-		//names.add(name);
-		apps.add(appliance);	
-		//return appliance.getId();
-		//apps.put(name, appliance);
+	public <AppType extends Appliance> void addAppliance(Class<AppType> AppClass, String name){
+		if (AppClass.isInterface() ||  java.lang.reflect.Modifier.isAbstract(AppClass.getModifiers()))
+			return;
+		
+		AppType app = null;
+		try {
+			app = (AppType)AppClass.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		
+		if (app==null) return;
+		
+		app.setReadableName(name);
+		apps.add(app);	
 	}
 	
 	public void removeAppliance(String name){
@@ -36,7 +48,7 @@ public class ApplianceManager {
 		apps.remove(app);		
 	}
 
-	public Set<Appliance> getAppliance(String name){
+	private Set<Appliance> getAppliance(String name){
 		Set<Appliance> found = new HashSet<Appliance>();
 		for (Appliance app: apps){
 			if (app.getReadableName().equals(name))
@@ -45,7 +57,7 @@ public class ApplianceManager {
 		return found;
 	}
 	
-	public Appliance getAppliance(int id){
+	private Appliance getAppliance(int id){
 		Appliance found = null;
 		for (Appliance app: apps){
 			if (app.getId()==id){
@@ -56,8 +68,11 @@ public class ApplianceManager {
 		return found;
 	}
 	
-	public void pushButton(int id, int button){
-		getAppliance(id).pushButton(button);
+	public void pushButton(String name, int button){
+		Set<Appliance> matchs = getAppliance(name);//pushButton(button);
+		for (Appliance app: matchs){
+			app.pushButton(button);
+		}
 	}
 	
 	public void main(String[] args){

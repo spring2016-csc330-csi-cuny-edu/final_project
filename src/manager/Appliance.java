@@ -6,13 +6,13 @@ abstract public class Appliance{
 	static public int cur_id = 0;
 	
 	private int id;
-	protected String readableName;
+	private String readableName;
 	
-	public Appliance(){
-		init(null);
+	protected Appliance(){
+		init("");
 	}
 	
-	public Appliance(String readableName){
+	protected Appliance(String readableName){
 		init(readableName);
 	}
 	
@@ -26,8 +26,12 @@ abstract public class Appliance{
 		return id;		
 	}
 	
-	public String getReadableName(){
+	protected String getReadableName(){
 		return readableName;		
+	}
+	
+	protected void setReadableName(String readableName){
+		this.readableName = readableName;		
 	}
 	
 	protected boolean equals(Appliance other){
