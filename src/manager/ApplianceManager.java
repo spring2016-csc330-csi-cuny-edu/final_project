@@ -1,25 +1,18 @@
 package manager;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ApplianceManager {
 	private Set<Appliance> apps;
-	//private List<Appliance> apps;
-	//private Map<String, Appliance> apps;
+	private static int nextId;
 	
 	public ApplianceManager(){
 		apps = new HashSet<Appliance>();
-		//apps = new ArrayList<Appliance>();	
-		//apps = new HashMap<String,Appliance>();
-		//names = new ArrayList<String>();
+		nextId = 0;
 	}
 	
-	public <AppType extends Appliance> boolean addAppliance(Class<AppType> AppClass, String name){
+	public <AppType extends ConcreteAppliance> boolean addAppliance(Class<AppType> AppClass, String name){
 		if (AppClass.isInterface() ||  java.lang.reflect.Modifier.isAbstract(AppClass.getModifiers()))
 			return false;
 		
@@ -49,8 +42,8 @@ public class ApplianceManager {
 
 		if (app==null) return false;
 		
-		//app.setReadableName(name);
 		apps.add(app);	
+		nextId++;
 		return true;
 	}
 	
@@ -74,17 +67,6 @@ public class ApplianceManager {
 		return found;
 	}
 	
-	private Appliance getAppliance(int id){
-		Appliance found = null;
-		for (Appliance app: apps){
-			if (app.getId()==id){
-				found = app;
-				break;
-			}
-		}
-		return found;
-	}
-	
 	public void pushButton(String name, int button){
 		Set<Appliance> matchs = getAppliance(name);//pushButton(button);
 		for (Appliance app: matchs){
@@ -92,9 +74,7 @@ public class ApplianceManager {
 		}
 	}
 	
-	public void main(String[] args){
-		
-		
-		
+	protected static int getNextId(){
+		return nextId;
 	}
 }
