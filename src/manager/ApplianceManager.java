@@ -1,4 +1,5 @@
 package manager;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,23 +19,39 @@ public class ApplianceManager {
 		//names = new ArrayList<String>();
 	}
 	
-	public <AppType extends Appliance> void addAppliance(Class<AppType> AppClass, String name){
+	public <AppType extends Appliance> boolean addAppliance(Class<AppType> AppClass, String name){
 		if (AppClass.isInterface() ||  java.lang.reflect.Modifier.isAbstract(AppClass.getModifiers()))
-			return;
+			return false;
 		
 		AppType app = null;
+		
 		try {
-			app = (AppType)AppClass.newInstance();
+			app = AppClass.getDeclaredConstructor(String.class).newInstance(name);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
+			return false;
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return false;
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			return false;
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			return false;
+		} catch (SecurityException e) {
+			e.printStackTrace();
+			return false;
 		}
+
+		if (app==null) return false;
 		
-		if (app==null) return;
-		
-		app.setReadableName(name);
+		//app.setReadableName(name);
 		apps.add(app);	
+		return true;
 	}
 	
 	public void removeAppliance(String name){
