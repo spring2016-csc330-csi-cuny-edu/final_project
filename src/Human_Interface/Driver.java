@@ -9,6 +9,6 @@ public class Driver {
 	
 	public static void main(String[] args){
 		home.addAppliance(SlicerAndDicerModel7.class, "cool");
-		home.pushButton("cool", Blender.HIGH_SPEED);
+		home.pushButton("cool", SlicerAndDicerModel7.HIGH_SPEED);
 	}
 }
