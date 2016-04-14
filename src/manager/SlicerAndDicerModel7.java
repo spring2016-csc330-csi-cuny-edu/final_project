@@ -1,15 +1,15 @@
 package manager;
 
-public class SlicerAndDicerModel7 extends Blender {
-
+public class SlicerAndDicerModel7 extends ConcreteAppliance implements Blender {
+	
 	protected SlicerAndDicerModel7(){
-		super();
+		super ();
 	}
-	protected SlicerAndDicerModel7(String name){
-		super(name);
+	protected SlicerAndDicerModel7(String name){ 
+		super (name);
 	}
 	
-	protected void pushButton(int button) {
+	public void pushButton(int button) {
 		switch(button)
 		{
 		case ON:
@@ -25,5 +25,4 @@ public class SlicerAndDicerModel7 extends Blender {
 		}
 		
 	}
-
 }
