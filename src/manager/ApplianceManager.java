@@ -12,7 +12,7 @@ public class ApplianceManager {
 		nextId = 0;
 	}
 	
-	public <AppType extends ConcreteAppliance> boolean addAppliance(Class<AppType> AppClass, String name){
+	public <AppType extends AbstractAppliance> boolean addAppliance(Class<AppType> AppClass, String name){
 		if (AppClass.isInterface() ||  java.lang.reflect.Modifier.isAbstract(AppClass.getModifiers()))
 			return false;
 		
@@ -67,7 +67,7 @@ public class ApplianceManager {
 		return found;
 	}
 	
-	public void pushButton(String name, int button){
+	public void pushButton(String name, manager.behavior.Button button){
 		Set<Appliance> matchs = getAppliance(name);//pushButton(button);
 		for (Appliance app: matchs){
 			app.pushButton(button);
