@@ -3,6 +3,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
+import manager.Appliance.ApplianceComponent;
+
 public class ApplianceManager {
 	private Set<Appliance> apps;
 	private static int nextId;
@@ -67,10 +69,11 @@ public class ApplianceManager {
 		return found;
 	}
 	
-	public void pushButton(String name, manager.behavior.Button button){
+	
+	public void pushButton(String name, manager.behavior.Behavior.Button button, ApplianceComponent component){
 		Set<Appliance> matchs = getAppliance(name);//pushButton(button);
 		for (Appliance app: matchs){
-			app.pushButton(button);
+			app.pushButton(button, app.getComponent(component));
 		}
 	}
 	

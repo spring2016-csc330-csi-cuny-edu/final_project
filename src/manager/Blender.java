@@ -1,12 +1,15 @@
 package manager;
-import manager.behavior.Button;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import manager.behavior.Powerable;
 import manager.behavior.Scalable;
 
 public class Blender extends AbstractAppliance implements Powerable, Scalable
-{	
-	protected PowerableAttr mainPower;
-	protected ScaleableAttr speed;
+{
+	public static enum BlenderComponent implements ApplianceComponent{MainPower,Speed};
+	protected Map<BlenderComponent,Component> components;
 	
 	protected Blender(){
 		super();	
@@ -17,31 +20,24 @@ public class Blender extends AbstractAppliance implements Powerable, Scalable
 		init();
 	}
 	
-	private void init(){
-		mainPower = new PowerableAttr();
-		speed = new ScaleableAttr();
-		
-		mainPower.state = PowerState.OFF;
-		speed.state = RigidScaleState.LOW;
+	private void init(){	
+		components = new HashMap();
+		components.put(BlenderComponent.MainPower, new Component<PowerState>(PowerState.OFF));
+		components.put(BlenderComponent.Speed,  new Component<RigidScaleState>(RigidScaleState.LOW));
 	}
 	
-	public void pushButton(Button button) {
-		if (button instanceof PowerState)
-			System.out.println("power");//changeState(mainPower, (PowerState) button);
-		if (button instanceof Scalable);
-			System.out.println("sclae");//changeState(speed, (ScaleState) button);
+	public Component getComponent(ApplianceComponent ac){
+		return components.get(ac);
 	}
+		
+	//public void pushButton(Button button, Component component) {
+	//	component.changeState(button);
+		//if (button instanceof PowerState);
+		//else if (button instanceof Scalable);
+		//else
+		//	System.out.println("invalid button: " + button);
+	//}
 
-
-	public void changeState(PowerableAttr attr, PowerState state) {
-		attr.state = state;
-		System.out.println("power " + state);
-	}
-
-	public void changeState(ScaleableAttr attr, ScaleState state) {
-		attr.state = state;
-		System.out.println("scaleable " + state);
-	}
 	
 }
 

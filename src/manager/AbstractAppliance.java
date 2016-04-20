@@ -28,4 +28,13 @@ public abstract class AbstractAppliance implements Appliance{
 	public boolean equals(Appliance other) {
 		return this.id == other.getId();
 	}
+	
+	
+	public void pushButton(manager.behavior.Behavior.Button button, Component component) {
+		component.changeState(button);
+		//if (button instanceof PowerState);
+		//else if (button instanceof Scalable);
+		//else
+		//	System.out.println("invalid button: " + button);
+	}
 }

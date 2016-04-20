@@ -1,5 +1,4 @@
 package manager.behavior;
 
-public interface Schedulable {
-
+public interface Schedulable extends Behavior{
 }

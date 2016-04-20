@@ -10,7 +10,7 @@ public class SlicerAndDicerModel7 extends Blender {
 		super (name);
 	}
 
-	public void pushButton(Button button) {
+	/*public void pushButton(Button button) {
 		super.pushButton(button);		
-	}
+	}*/
 }
