@@ -9,11 +9,6 @@ public class Driver {
 	
 	public static void main(String[] args){
 		home.addAppliance(SlicerAndDicerModel7.class, "cool");
-		home.pushButton("cool", Powerable.PowerState.ON, Blender.BlenderComponent.MainPower);
-		/*
-		home.pushButton("cool", Powerable.PowerState.ON,);
-		home.pushButton("cool", Powerable.PowerState.OFF,);
-		home.pushButton("cool", Powerable.PowerState.ON,);
-		*/
+		home.pushButton("cool", Powerable.PowerState.ON, Blender.PowerComponent.MainPower);
 	}
 }

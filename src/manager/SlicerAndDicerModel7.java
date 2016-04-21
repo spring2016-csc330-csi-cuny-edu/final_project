@@ -1,5 +1,4 @@
 package manager;
-import manager.behavior.Button;
 
 public class SlicerAndDicerModel7 extends Blender {
 	
@@ -10,7 +9,7 @@ public class SlicerAndDicerModel7 extends Blender {
 		super (name);
 	}
 
-	/*public void pushButton(Button button) {
-		super.pushButton(button);		
-	}*/
+	public void pushButton(manager.behavior.Behavior.Button button, Component component) {
+		super.pushButton(button, component);
+	}
 }

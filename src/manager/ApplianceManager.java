@@ -3,7 +3,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
-import manager.Appliance.ApplianceComponent;
+import manager.Appliance.ComponentName;
+import manager.behavior.Behavior.Button;
+import manager.behavior.Powerable;
+import manager.behavior.Powerable.PowerState;
+import manager.behavior.Scalable;
+import manager.behavior.Startable;
 
 public class ApplianceManager {
 	private Set<Appliance> apps;
@@ -70,10 +75,10 @@ public class ApplianceManager {
 	}
 	
 	
-	public void pushButton(String name, manager.behavior.Behavior.Button button, ApplianceComponent component){
-		Set<Appliance> matchs = getAppliance(name);//pushButton(button);
+	public <T extends Button>void pushButton(String name, T button, ComponentName<T> componentName){
+		Set<Appliance> matchs = getAppliance(name);
 		for (Appliance app: matchs){
-			app.pushButton(button, app.getComponent(component));
+			app.pushButton(button, app.getComponent(componentName));
 		}
 	}
 	

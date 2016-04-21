@@ -5,11 +5,13 @@ import java.util.Map;
 
 import manager.behavior.Powerable;
 import manager.behavior.Scalable;
+import manager.behavior.Startable.StartState;
 
 public class Blender extends AbstractAppliance implements Powerable, Scalable
 {
-	public static enum BlenderComponent implements ApplianceComponent{MainPower,Speed};
-	protected Map<BlenderComponent,Component> components;
+	//public static enum BlenderComponent implements ComponentName{MainPower,Speed};
+	public static enum PowerComponent implements ComponentName<PowerState>{MainPower};
+	public static enum ScalableComponent implements ComponentName<RigidScaleState>{Speed};
 	
 	protected Blender(){
 		super();	
@@ -21,23 +23,10 @@ public class Blender extends AbstractAppliance implements Powerable, Scalable
 	}
 	
 	private void init(){	
-		components = new HashMap();
-		components.put(BlenderComponent.MainPower, new Component<PowerState>(PowerState.OFF));
-		components.put(BlenderComponent.Speed,  new Component<RigidScaleState>(RigidScaleState.LOW));
-	}
-	
-	public Component getComponent(ApplianceComponent ac){
-		return components.get(ac);
+		components.put(PowerComponent.MainPower, new Component<PowerState>(PowerState.OFF));
+		components.put(ScalableComponent.Speed,  new Component<RigidScaleState>(RigidScaleState.LOW));
 	}
 		
-	//public void pushButton(Button button, Component component) {
-	//	component.changeState(button);
-		//if (button instanceof PowerState);
-		//else if (button instanceof Scalable);
-		//else
-		//	System.out.println("invalid button: " + button);
-	//}
 
-	
 }
 

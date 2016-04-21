@@ -1,8 +1,15 @@
 package manager;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import manager.Appliance.ComponentName;
+import manager.behavior.Behavior.Button;
+
 public abstract class AbstractAppliance implements Appliance{
 	protected int id;
 	protected String readableName;
+	protected Map<ComponentName,Component> components;
 	
 	public AbstractAppliance(){
 		init(ApplianceManager.getNextId(),"");
@@ -15,6 +22,7 @@ public abstract class AbstractAppliance implements Appliance{
 	private void init(int id, String readableName){
 		this.id = id;
 		this.readableName = readableName;
+		components = new HashMap<ComponentName,Component>();
 	}
 	
 	public String getReadableName() {
@@ -30,11 +38,11 @@ public abstract class AbstractAppliance implements Appliance{
 	}
 	
 	
-	public void pushButton(manager.behavior.Behavior.Button button, Component component) {
+	public <T extends Button> void pushButton(T button, Component<T> component) {
 		component.changeState(button);
-		//if (button instanceof PowerState);
-		//else if (button instanceof Scalable);
-		//else
-		//	System.out.println("invalid button: " + button);
+	}
+	
+	public <T extends Button> Component<T> getComponent(ComponentName<T> ac){
+		return (Component<T>) components.get(ac);
 	}
 }
