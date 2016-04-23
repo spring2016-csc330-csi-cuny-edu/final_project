@@ -2,7 +2,7 @@ package Human_Interface;
 
 import manager.*;
 import manager.behavior.Powerable;
-
+//lol
 public class Driver {
 	static ApplianceManager home = new ApplianceManager();
 	
