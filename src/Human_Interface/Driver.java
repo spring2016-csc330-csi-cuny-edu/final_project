@@ -2,7 +2,6 @@ package Human_Interface;
 
 import manager.*;
 import manager.behavior.Powerable;
-import manager.behavior.Startable;
 
 public class Driver {
 	static ApplianceManager home = new ApplianceManager();
