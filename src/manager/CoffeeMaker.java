@@ -20,4 +20,5 @@ public class CoffeeMaker extends AbstractAppliance implements Powerable, Startab
 		components.put(StartableComponent.BeginBrew,  new Component<StartState>(StartState.STOP));
 		components.put(StartableComponent.Clean,  new Component<StartState>(StartState.STOP));
 	}
+	public void foo(){}
 }

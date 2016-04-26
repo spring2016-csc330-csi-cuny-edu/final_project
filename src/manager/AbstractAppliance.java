@@ -6,7 +6,7 @@ import java.util.Map;
 import manager.Appliance.ComponentName;
 import manager.behavior.Behavior.Button;
 
-public abstract class AbstractAppliance implements Appliance{
+abstract class AbstractAppliance implements Appliance{
 	protected int id;
 	protected String readableName;
 	protected Map<ComponentName,Component> components;

@@ -8,6 +8,7 @@ import manager.behavior.Behavior;
 import manager.behavior.Behavior.Button;
 import manager.behavior.Schedulable;
 import manager.behavior.Schedulable.AppEventPackage;
+import manager.behavior.Schedulable.SchedulableInstance;
 
 public class ApplianceManager {
 	private Set<Appliance> apps;
@@ -80,11 +81,11 @@ public class ApplianceManager {
 		}
 	}
 	
-	public Schedulable getSchedulable(String name){
+	public SchedulableInstance getSchedulable(String name){
 		Set<Appliance> matchs = getAppliance(name);
 		for (Appliance app: matchs){
 			if (app instanceof Schedulable){
-				return ((Schedulable)app);
+				return (new SchedulableInstance((Schedulable)app));
 			}
 		}
 		return null;

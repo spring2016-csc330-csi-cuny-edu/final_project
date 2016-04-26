@@ -18,7 +18,7 @@ public class Blender extends AbstractAppliance implements Powerable, Scalable
 		init();
 	}
 	
-	protected void init(){	
+	void init(){	
 		components.put(PowerComponent.MainPower, new Component<PowerState>(PowerState.OFF));
 		components.put(ScalableComponent.Speed,  new Component<RigidScaleState>(RigidScaleState.LOW));
 	}

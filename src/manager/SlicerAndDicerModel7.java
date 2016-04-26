@@ -11,7 +11,7 @@ public final class SlicerAndDicerModel7 extends Blender {
 		super (name);
 	}
 	
-	protected void init(){	
+	void init(){	
 		components.put(PowerComponent.MainPower, new Component<PowerState>(PowerState.OFF));
 		components.put(ScalableComponent.Speed,  new Component<SlicerAndDicerModel7Scale>(SlicerAndDicerModel7Scale.LOW));
 	}

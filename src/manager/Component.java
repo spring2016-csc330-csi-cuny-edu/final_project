@@ -11,11 +11,12 @@ public class Component<T extends Button>{
 	}
 	
 	protected void changeState(T state){
+		if (this.state == state) return;
 		this.state = state;
 		System.out.println(this);
 	}
 	
 	public String toString(){
-		return String.format("%s: %s",state.getClass().getSimpleName(),state);
+		return String.format("%s: %s",this.state.getClass().getSimpleName(),this.state);
 	}
 }
