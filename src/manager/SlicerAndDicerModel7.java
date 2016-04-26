@@ -1,15 +1,18 @@
 package manager;
 
-public class SlicerAndDicerModel7 extends Blender {
+public final class SlicerAndDicerModel7 extends Blender {
+	public static enum ScalableComponent implements ComponentName<SlicerAndDicerModel7Scale>{Speed};
+	public static enum SlicerAndDicerModel7Scale implements ScaleState, Button{LOW, MID, HIGH,SUPER_HIGH};
 	
-	protected SlicerAndDicerModel7(){
+	SlicerAndDicerModel7(){
 		super ();
 	}
-	protected SlicerAndDicerModel7(String name){ 
+	SlicerAndDicerModel7(String name){ 
 		super (name);
 	}
-
-	public void pushButton(manager.behavior.Behavior.Button button, Component component) {
-		super.pushButton(button, component);
+	
+	protected void init(){	
+		components.put(PowerComponent.MainPower, new Component<PowerState>(PowerState.OFF));
+		components.put(ScalableComponent.Speed,  new Component<SlicerAndDicerModel7Scale>(SlicerAndDicerModel7Scale.LOW));
 	}
 }

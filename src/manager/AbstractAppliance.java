@@ -11,11 +11,11 @@ public abstract class AbstractAppliance implements Appliance{
 	protected String readableName;
 	protected Map<ComponentName,Component> components;
 	
-	public AbstractAppliance(){
+	AbstractAppliance(){
 		init(ApplianceManager.getNextId(),"");
 	}
 	
-	public AbstractAppliance(String readableName){
+	AbstractAppliance(String readableName){
 		init(ApplianceManager.getNextId(),readableName);
 	}
 	
@@ -39,6 +39,7 @@ public abstract class AbstractAppliance implements Appliance{
 	
 	
 	public <T extends Button> void pushButton(T button, Component<T> component) {
+		if (component==null)return;
 		component.changeState(button);
 	}
 	

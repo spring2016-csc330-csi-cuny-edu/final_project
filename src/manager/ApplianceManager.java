@@ -5,10 +5,6 @@ import java.util.Set;
 
 import manager.Appliance.ComponentName;
 import manager.behavior.Behavior.Button;
-import manager.behavior.Powerable;
-import manager.behavior.Powerable.PowerState;
-import manager.behavior.Scalable;
-import manager.behavior.Startable;
 
 public class ApplianceManager {
 	private Set<Appliance> apps;
