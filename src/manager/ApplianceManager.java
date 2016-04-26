@@ -4,7 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import manager.Appliance.ComponentName;
+import manager.behavior.Behavior;
 import manager.behavior.Behavior.Button;
+import manager.behavior.Schedulable;
+import manager.behavior.Schedulable.AppEventPackage;
 
 public class ApplianceManager {
 	private Set<Appliance> apps;
@@ -70,12 +73,21 @@ public class ApplianceManager {
 		return found;
 	}
 	
-	
 	public <T extends Button>void pushButton(String name, T button, ComponentName<T> componentName){
 		Set<Appliance> matchs = getAppliance(name);
 		for (Appliance app: matchs){
 			app.pushButton(button, app.getComponent(componentName));
 		}
+	}
+	
+	public Schedulable getSchedulable(String name){
+		Set<Appliance> matchs = getAppliance(name);
+		for (Appliance app: matchs){
+			if (app instanceof Schedulable){
+				return ((Schedulable)app);
+			}
+		}
+		return null;
 	}
 	
 	protected static int getNextId(){

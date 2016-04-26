@@ -23,10 +23,10 @@ public class Light extends AbstractAppliance implements Powerable, Scalable, Sch
 		components.put(ScalableComponent.Luminence,  new Component<RigidScaleState>(RigidScaleState.HIGH));		
 	}
 
-	public boolean fireEvent(Object event) {
-		if (!(event instanceof EventPackage))
+	public boolean fireEvent(EventPackage event) {
+		if (!(event instanceof AppEventPackage))
 			return false;
-		this.pushButton(((EventPackage)event).button, this.getComponent(((EventPackage)event).cname));
+		this.pushButton(((AppEventPackage)event).button, this.getComponent(((AppEventPackage)event).cname));
 		return true;
 	}
 }
