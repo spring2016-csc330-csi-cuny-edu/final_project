@@ -6,10 +6,11 @@ import java.util.Map;
 import manager.Appliance.ComponentName;
 import manager.behavior.Behavior.Button;
 
-abstract class AbstractAppliance implements Appliance{
+public abstract class AbstractAppliance implements Appliance{
 	protected int id;
 	protected String readableName;
 	protected Map<ComponentName,Component> components;
+	//public AppInfo info;
 	
 	AbstractAppliance(){
 		init(ApplianceManager.getNextId(),"");
@@ -22,7 +23,8 @@ abstract class AbstractAppliance implements Appliance{
 	private void init(int id, String readableName){
 		this.id = id;
 		this.readableName = readableName;
-		components = new HashMap<ComponentName,Component>();
+		this.components = new HashMap<ComponentName,Component>();
+		//this.info = new AppInfo((Class<Appliance>) this.getClass());
 	}
 	
 	public String getReadableName() {
@@ -46,4 +48,9 @@ abstract class AbstractAppliance implements Appliance{
 	public <T extends Button> Component<T> getComponent(ComponentName<T> ac){
 		return (Component<T>) components.get(ac);
 	}
+	
+	/*
+	public AppInfo getAppInfo(){
+		return info;
+	}*/
 }

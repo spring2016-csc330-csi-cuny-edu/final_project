@@ -6,13 +6,12 @@ import java.util.concurrent.DelayQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Scheduler {
-	private static Scheduler s = new Scheduler();
+	private final static Scheduler s = new Scheduler();
 	private static int nextEID = 0;
 	private static DelayQueue<Event> events = new DelayQueue<Event>();
 	private static Thread executer;
 	{
 	 executer =  new Thread(new Runnable() {
-		        @Override
 		        public void run() {
 		            while (true) {
 		                try {
@@ -20,7 +19,7 @@ public class Scheduler {
 		                	e = events.take();
 		                	if (e!=null)		        		
 			                	e.trigger();
-		                    Thread.sleep(1000);
+		                    Thread.sleep(200);
 		                } catch (InterruptedException ex) {
 		                    ex.printStackTrace();
 		                }
@@ -36,8 +35,6 @@ public class Scheduler {
 		events = new DelayQueue<Event>();
 	}
 	public static Scheduler getInstance(){
-		if (s == null)
-			s = new Scheduler();
 		return s;
 	}
 	public int addEvent(Event e){
@@ -47,18 +44,23 @@ public class Scheduler {
 		nextEID++;
 		return nextEID -1;
 	}
-	public boolean exeEvent(){
-		Event e = null;
-		e = events.poll();
-		if (e==null) return false;
-		e.trigger();
+	public boolean exeEvent(int eid){
+		Event found = getEvent(eid);
+		if (found==null) return false;
+		found.trigger();
+		events.remove(found);
 		return true;
 	}
-	public Event getEvent(int eid){
+	private Event getEvent(int eid){
 		for (Event e: events)
 			if (e.getEID()==eid)
 				return e;
 		return null;
 	}
-	
+	public boolean cancelEvent(int eid){
+		Event found = getEvent(eid);
+		if (found==null) return false;
+		events.remove(found);
+		return true;
+	}
 }

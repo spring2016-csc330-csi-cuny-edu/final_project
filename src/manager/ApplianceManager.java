@@ -12,11 +12,10 @@ import manager.behavior.Schedulable.SchedulableInstance;
 
 public class ApplianceManager {
 	private Set<Appliance> apps;
-	private static int nextId;
+	private static int nextId = 0;
 	
 	public ApplianceManager(){
 		apps = new HashSet<Appliance>();
-		nextId = 0;
 	}
 	
 	public <AppType extends AbstractAppliance> boolean addAppliance(Class<AppType> AppClass, String name){
@@ -27,24 +26,8 @@ public class ApplianceManager {
 		
 		try {
 			app = AppClass.getDeclaredConstructor(String.class).newInstance(name);
-		} catch (InstantiationException e) {
+		} catch (Exception e){
 			e.printStackTrace();
-			return false;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			return false;
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			return false;
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-			return false;
-		} catch (SecurityException e) {
-			e.printStackTrace();
-			return false;
 		}
 
 		if (app==null) return false;
@@ -61,7 +44,7 @@ public class ApplianceManager {
 		}
 	}
 	
-	public void removeAppliance(Appliance app){
+	private void removeAppliance(Appliance app){
 		apps.remove(app);		
 	}
 
@@ -73,6 +56,16 @@ public class ApplianceManager {
 		}
 		return found;
 	}
+	
+	/*
+	public Set<Appliance.AppInfo> getInfo(String name){
+		Set<Appliance.AppInfo> found = new HashSet<Appliance.AppInfo>();
+		for (Appliance app: apps){
+			if (app.getReadableName().equals(name))
+				found.add(app.getAppInfo());
+		}
+		return found;
+	}*/
 	
 	public <T extends Button>void pushButton(String name, T button, ComponentName<T> componentName){
 		Set<Appliance> matchs = getAppliance(name);
