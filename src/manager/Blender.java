@@ -6,8 +6,18 @@ import manager.behavior.Startable;
 
 public class Blender extends AbstractAppliance implements Powerable, Scalable
 {
-	public static enum PowerComponent implements ComponentName<PowerState>{MainPower};
-	public static enum ScalableComponent implements ComponentName<RigidScaleState>{Speed};
+	public static enum PowerComponent implements ComponentName<PowerState>{
+		MainPower;
+		public Class<PowerState> type() {
+			return PowerState.class;
+		}
+	};
+	public static enum ScalableComponent implements ComponentName<RigidScaleState>{
+		Speed;
+		public Class<RigidScaleState> type() {
+			return RigidScaleState.class;
+		}
+	};
 	
 	Blender(){
 		super();	

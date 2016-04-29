@@ -30,16 +30,12 @@ public class Driver {
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
 		Driver demo = new Driver();
-		demo.home.addAppliance(Blender.class,"cool");
-		demo.names.put("cool",Blender.class);
-		//demo.addAppliance();
-		//for (int i = 0; i < 2; i++)
-		//	demo.mainMenu(sc);
-		//sc.close();
-		demo.pushButton(sc);
+		demo.home.addAppliance(Light.class,"light");
+		demo.names.put("light",Light.class);
+		while(demo.mainMenu(sc));
+		sc.close();
 	}
-	private void mainMenu(Scanner sc){
-		
+	private boolean mainMenu(Scanner sc){
 		int choice = 0;
 		String c1="Add an appliance", 
 				c2="Remove an appliance", 
@@ -50,8 +46,8 @@ public class Driver {
 		
 		if (sc.hasNextInt()){
 			choice = sc.nextInt();
-			sc.nextLine();
 		}
+		sc.nextLine();
 		
 		
 		switch(choice){
@@ -67,10 +63,13 @@ public class Driver {
 		case 4:
 			scheduleEvent(sc);
 			break;
+		case -1:
+			return false;
 		default:
-			//invalid
+			System.out.println("Invalid Input!");
 			break;
 		}
+		return true;
 	}
 	private void addAppliance(Scanner sc){
 		Class appType;
@@ -93,32 +92,57 @@ public class Driver {
 	}
 	private void pushButton(Scanner sc){
 		String name;
-		Button button;
-		ComponentLookup.ComponentInfo cinfo;
+		Button button = null;
+		Appliance.ComponentName cname;
 		String buttonInput;
 		
 		System.out.print("Name:");
 		name = sc.nextLine();
 		
 		System.out.print("Component:");
-		cinfo = cl.getComponentInfo(names.get(name),sc.nextLine());
+		cname = cl.getComponentName(names.get(name),sc.nextLine());
 		
-		System.out.println(Arrays.toString(PowerComponent.values()));
+		if (cname == null) return;
 		
-		//System.out.print("Button:");
-		//buttonInput = sc.nextLine();
-		//System.out.println(Enum.valueOf(cinfo.ctype,buttonInput));
-		//for (Object b: cinfo.ctype.getEnumConstants())
-			//System.out.println(b);
-			//if (((Enum)b).name().equals(buttonInput))
-				//button = (T)b;
+		System.out.print("Button:");
+		buttonInput = sc.nextLine();
+		for (Object b: cname.type().getEnumConstants())
+			if (((Enum)b).name().equals(buttonInput))
+				button = (Button) b;
 		
-		//if ((appType = stringToAppliance.get(sc.nextLine())) == null) return;
-		//System.out.println(ap);
+		if (button == null) return;
 		
-		//home.pushButton(name, button, cname);
+		home.pushButton(name, button, cname);
 	}
 	private void scheduleEvent(Scanner sc){
+		String name;
+		Button button = null;
+		Appliance.ComponentName cname;
+		String buttonInput;
+		Long time = 0L;
+		
+		System.out.print("Name:");
+		name = sc.nextLine();
+		
+		System.out.print("Component:");
+		cname = cl.getComponentName(names.get(name),sc.nextLine());
+		
+		if (cname == null) return;
+		
+		System.out.print("Button:");
+		buttonInput = sc.nextLine();
+		for (Object b: cname.type().getEnumConstants())
+			if (((Enum)b).name().equals(buttonInput))
+				button = (Button) b;
+		
+		if (button == null) return;
+		
+		System.out.println("Timeoffset:");
+		if (sc.hasNextLong()) time = sc.nextLong();
+		else return;
+		
+		SchedulableInstance app = home.getSchedulable(name);
+		Scheduler.getInstance().addEvent(app.GenerateEvent(time, button, cname));
 	}
 	
 	private void demo(){

@@ -4,8 +4,19 @@ import manager.behavior.Powerable;
 import manager.behavior.Startable;
 
 public class CoffeeMaker extends AbstractAppliance implements Powerable, Startable{
-	public static enum PowerComponent implements ComponentName<PowerState>{MainPower};
-	public static enum StartableComponent implements ComponentName<StartState>{BeginBrew, Clean};
+	public static enum PowerComponent implements ComponentName<PowerState>{
+		MainPower;
+		public Class<PowerState> type() {
+			return PowerState.class;
+		}
+	};
+	public static enum StartableComponent implements ComponentName<StartState>{
+		BeginBrew, Clean;
+		public Class<StartState> type() {
+			return StartState.class;
+		}
+	};
+	
 	CoffeeMaker(){
 		super();	
 		init();

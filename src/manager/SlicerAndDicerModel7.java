@@ -1,7 +1,10 @@
 package manager;
 
 public final class SlicerAndDicerModel7 extends Blender {
-	public static enum ScalableComponent implements ComponentName<SlicerAndDicerModel7Scale>{Speed};
+	public static enum ScalableComponent implements ComponentName<SlicerAndDicerModel7Scale>{Speed;
+	public Class<SlicerAndDicerModel7Scale> type() {
+		return SlicerAndDicerModel7Scale.class;
+	}};
 	public static enum SlicerAndDicerModel7Scale implements ScaleState, Button{LOW, MID, HIGH,SUPER_HIGH};
 	
 	SlicerAndDicerModel7(){
