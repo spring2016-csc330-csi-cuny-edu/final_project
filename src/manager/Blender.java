@@ -1,15 +1,14 @@
 package manager;
 
-import manager.behavior.Powerable;
 import manager.behavior.Scalable;
 import manager.behavior.Startable;
 
-public class Blender extends AbstractAppliance implements Powerable, Scalable
+public class Blender extends AbstractAppliance implements Startable, Scalable
 {
-	public static enum PowerComponent implements ComponentName<PowerState>{
-		MainPower;
-		public Class<PowerState> type() {
-			return PowerState.class;
+	public static enum StartableComponent implements ComponentName<StartState>{
+		StartBlend;
+		public Class<StartState> type() {
+			return StartState.class;
 		}
 	};
 	public static enum ScalableComponent implements ComponentName<RigidScaleState>{
@@ -23,13 +22,14 @@ public class Blender extends AbstractAppliance implements Powerable, Scalable
 		super();	
 		init();
 	}
+	
 	Blender(String name){
 		super(name);
 		init();
 	}
 	
 	void init(){	
-		components.put(PowerComponent.MainPower, new Component<PowerState>(PowerState.OFF));
+		components.put(StartableComponent.StartBlend, new Component<StartState>(StartState.STOP));
 		components.put(ScalableComponent.Speed,  new Component<RigidScaleState>(RigidScaleState.LOW));
 	}
 		

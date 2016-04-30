@@ -6,12 +6,14 @@ import manager.behavior.Scalable;
 import manager.behavior.Schedulable;
 
 public class Light extends AbstractAppliance implements Powerable, Scalable, Schedulable{
-	public static enum PowerComponent implements ComponentName<PowerState>{MainPower;
+	public static enum PowerComponent implements ComponentName<PowerState>{
+		MainPower;
 	public Class<PowerState> type() {
 		return PowerState.class;
 	}};
 	
-	public static enum ScalableComponent implements ComponentName<RigidScaleState>{Luminence;
+	public static enum ScalableComponent implements ComponentName<RigidScaleState>{
+		Luminence;
 	public Class<RigidScaleState> type() {
 		return RigidScaleState.class;
 	}};

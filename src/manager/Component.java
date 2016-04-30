@@ -1,8 +1,12 @@
 package manager;
 
-import manager.Appliance.ComponentName;
 import manager.behavior.Behavior.Button;
 
+/**
+ * Tracks the state of a particular component, such as power or speed.
+ * Also, handles changing states. Components are unaware of their names.
+ * @param <T> Type of Button: PowerState, StartState, ScaleState, etc.
+ */
 public class Component<T extends Button>{
 	private T state;
 	

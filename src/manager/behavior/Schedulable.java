@@ -1,12 +1,16 @@
 package manager.behavior;
 import scheduler.Event;
-import manager.Component;
-import manager.Light;
 import manager.Appliance.ComponentName;
-import manager.behavior.Behavior.Button;
 
+/**
+ *	Bridges the gap between the scheduler package and schedulable appliances
+ */
 public interface Schedulable extends Behavior, scheduler.Schedulable{
 
+	/**
+	 * Appliance specific twist on {@linkplain scheduler.Schedulable.EventPackage}
+	 * @see scheduler.Schedulable.EventPackage
+	 */
 	public class AppEventPackage <T extends Button> implements scheduler.Schedulable.EventPackage{
 		public ComponentName<T> cname;
 		public T button;
@@ -16,7 +20,9 @@ public interface Schedulable extends Behavior, scheduler.Schedulable{
 			this.button = button;
 		}
 	}
-	
+	/**
+	 * Proxy class to shield appliances from use outside the package.
+	 */
 	public class SchedulableInstance implements Schedulable{
 		private Schedulable appliance;
 		public SchedulableInstance(Schedulable appliance){

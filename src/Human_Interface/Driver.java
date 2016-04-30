@@ -1,17 +1,17 @@
 package Human_Interface;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 import manager.*;
-import manager.Blender.PowerComponent;
 import manager.behavior.*;
 import manager.behavior.Behavior.Button;
-import manager.behavior.Powerable.PowerState;
 import scheduler.*;
 import manager.behavior.Schedulable.SchedulableInstance;
 
@@ -28,12 +28,30 @@ public class Driver {
 
 
 	public static void main(String[] args){
-		Scanner sc = new Scanner(System.in);
+		Scanner humanInput = new Scanner(System.in);
 		Driver demo = new Driver();
-		demo.home.addAppliance(Light.class,"light");
-		demo.names.put("light",Light.class);
-		while(demo.mainMenu(sc));
-		sc.close();
+		
+		File file = new File("test.txt");
+		if (!file.exists())
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		if (file.exists()){
+			Scanner fileInput;
+			try {
+				fileInput = new Scanner(new FileInputStream(file));
+				while (fileInput.hasNextLine()){
+					demo.addAppliance(fileInput,new PrintStream("NUL:"));
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		while(demo.mainMenu(humanInput));
+		humanInput.close();
 	}
 	private boolean mainMenu(Scanner sc){
 		int choice = 0;
@@ -48,20 +66,20 @@ public class Driver {
 			choice = sc.nextInt();
 		}
 		sc.nextLine();
-		
+		System.out.println("");
 		
 		switch(choice){
 		case 1:
-			addAppliance(sc);
+			addAppliance(sc,System.out);
 			break;
 		case 2:
-			removeAppliance(sc);
+			removeAppliance(sc,System.out);
 			break;
 		case 3:
-			pushButton(sc);
+			pushButton(sc,System.out);
 			break;
 		case 4:
-			scheduleEvent(sc);
+			scheduleEvent(sc,System.out);
 			break;
 		case -1:
 			return false;
@@ -69,43 +87,42 @@ public class Driver {
 			System.out.println("Invalid Input!");
 			break;
 		}
+		System.out.println("");
 		return true;
 	}
-	private void addAppliance(Scanner sc){
+	private void addAppliance(Scanner in, PrintStream out){
 		Class appType;
 		String name;
 		
-		System.out.print("App Type:");
-		if ((appType = cl.stringToAppliance(sc.nextLine())) == null) return;
+		out.print("App Type:");
+		if ((appType = cl.stringToAppliance(in.nextLine())) == null) return;
+				
+		out.print("App name:");
+		name = in.nextLine();
 		
-		appType = cl.stringToAppliance("Blender");
-		
-		System.out.print("App name:");
-		name = sc.nextLine();
 		home.addAppliance(appType,name);
-		
 		names.put(name,appType);
 	}
-	private void removeAppliance(Scanner sc){
-		System.out.print("App name:");
-		home.removeAppliance(sc.nextLine());
+	private void removeAppliance(Scanner in, PrintStream out){
+		out.print("App name:");
+		home.removeAppliance(in.nextLine());
 	}
-	private void pushButton(Scanner sc){
+	private void pushButton(Scanner in, PrintStream out){
 		String name;
 		Button button = null;
 		Appliance.ComponentName cname;
 		String buttonInput;
 		
-		System.out.print("Name:");
-		name = sc.nextLine();
+		out.print("Name:");
+		name = in.nextLine();
 		
-		System.out.print("Component:");
-		cname = cl.getComponentName(names.get(name),sc.nextLine());
+		out.print("Component:");
+		cname = cl.getComponentName(names.get(name),in.nextLine());
 		
 		if (cname == null) return;
 		
-		System.out.print("Button:");
-		buttonInput = sc.nextLine();
+		out.print("Button:");
+		buttonInput = in.nextLine();
 		for (Object b: cname.type().getEnumConstants())
 			if (((Enum)b).name().equals(buttonInput))
 				button = (Button) b;
@@ -114,34 +131,36 @@ public class Driver {
 		
 		home.pushButton(name, button, cname);
 	}
-	private void scheduleEvent(Scanner sc){
+	private void scheduleEvent(Scanner in, PrintStream out){
 		String name;
 		Button button = null;
 		Appliance.ComponentName cname;
 		String buttonInput;
 		Long time = 0L;
 		
-		System.out.print("Name:");
-		name = sc.nextLine();
+		out.print("Name:");
+		name = in.nextLine();
 		
-		System.out.print("Component:");
-		cname = cl.getComponentName(names.get(name),sc.nextLine());
+		out.print("Component:");
+		cname = cl.getComponentName(names.get(name),in.nextLine());
 		
 		if (cname == null) return;
 		
-		System.out.print("Button:");
-		buttonInput = sc.nextLine();
+		out.print("Button:");
+		buttonInput = in.nextLine();
 		for (Object b: cname.type().getEnumConstants())
 			if (((Enum)b).name().equals(buttonInput))
 				button = (Button) b;
 		
 		if (button == null) return;
 		
-		System.out.println("Timeoffset:");
-		if (sc.hasNextLong()) time = sc.nextLong();
+		out.println("Timeoffset:");
+		if (in.hasNextLong()) time = in.nextLong();
 		else return;
 		
 		SchedulableInstance app = home.getSchedulable(name);
+		if (app == null) return;
+		
 		Scheduler.getInstance().addEvent(app.GenerateEvent(time, button, cname));
 	}
 	

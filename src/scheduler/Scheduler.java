@@ -10,6 +10,7 @@ public class Scheduler {
 	private static int nextEID = 0;
 	private static DelayQueue<Event> events = new DelayQueue<Event>();
 	private static Thread executer;
+	
 	{
 	 executer =  new Thread(new Runnable() {
 		        public void run() {
@@ -17,7 +18,7 @@ public class Scheduler {
 		                try {
 		                	Event e = null;
 		                	e = events.take();
-		                	if (e!=null)		        		
+		                	if (e!=null)	        		
 			                	e.trigger();
 		                    Thread.sleep(200);
 		                } catch (InterruptedException ex) {
