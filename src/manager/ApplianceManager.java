@@ -48,7 +48,7 @@ public class ApplianceManager {
 	}
 	
 	/**
-	 * Removes every appliance with a name matching {@paramref name}
+	 * Removes every appliance with a name matching {@link name}
 	 * @param name the name of the appliance to be removed
 	 * */
 	public void removeAppliance(String name){
@@ -64,7 +64,7 @@ public class ApplianceManager {
 
 	/**
 	 * @param name the name of the appliance to be matched
-	 * @return a set of all appliances matching {@paramref name}
+	 * @return a set of all appliances matching {@link name}
 	 * */
 	private Set<Appliance> getAppliance(String name){
 		Set<Appliance> found = new HashSet<Appliance>();
@@ -76,8 +76,8 @@ public class ApplianceManager {
 	}
 	
 	/**
-	 * Calls the {@link Appliance#pushButton(Button, Component)}
-	 * for every appliance with a name matching {@paramref name}
+	 * Calls the {@link Appliance#pushButton}
+	 * for every appliance with a name matching {@link name}
 	 * */
 	public <T extends Button>void pushButton(String name, T button, ComponentName<T> cname){
 		Set<Appliance> matchs = getAppliance(name);
@@ -87,9 +87,9 @@ public class ApplianceManager {
 	}
 	
 	/**
-	 * @param name
+	 * @param name the name of the appliance to be matched
 	 * @return a proxy of the schedulable appliance with a name
-	 * matching {@paramref name}
+	 * matching {@link name}
 	 */
 	public SchedulableInstance getSchedulable(String name){
 		Set<Appliance> matchs = getAppliance(name);

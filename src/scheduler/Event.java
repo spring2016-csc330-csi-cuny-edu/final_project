@@ -3,6 +3,10 @@ package scheduler;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * An event ties together a schedulable, event package, and a execution time.
+ * Implementing the Delayed interface allows an Event to be used in a DelayedQueue.
+ */
 public class Event implements Delayed{
 	private long startTime;
 	private int eid;
@@ -10,6 +14,7 @@ public class Event implements Delayed{
 	private Schedulable.EventPackage eventPack;
 	
 	public Event(long startTime, Schedulable obj,Schedulable.EventPackage eventPack){
+		//startTime is obtained by offsetting the current time with the user's input.
 		this.startTime = System.currentTimeMillis()/1000 + startTime;
 		this.obj = obj;
 		this.eventPack = eventPack;

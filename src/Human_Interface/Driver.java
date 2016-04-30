@@ -165,11 +165,11 @@ public class Driver {
 	}
 	
 	private void demo(){
-		//home.addAppliance(SlicerAndDicerModel7.class, "cool");
 		home.addAppliance(Light.class, "steve");
 		home.addAppliance(CoffeeMaker.class, "cool");
+		
 		home.pushButton("cool",Powerable.PowerState.OFF , CoffeeMaker.PowerComponent.MainPower);
-		//home.pushButton("steve", Powerable.PowerState.ON, Light.PowerComponent.MainPower);
+		
 		SchedulableInstance thing = home.getSchedulable("steve");
 		System.out.println("Begining Demo...");
 		

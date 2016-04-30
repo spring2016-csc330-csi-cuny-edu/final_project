@@ -7,6 +7,9 @@ import manager.Appliance.ComponentName;
 import manager.behavior.Behavior.Button;
 import manager.behavior.*;
 
+/**
+ * Helps user get objects from strings.
+ */
 public final class ComponentLookup {
 	private static Map<String,Class> stringToAppliance = new HashMap<String,Class>();
 	private static Map<String,Class> stringToButtonEnum = new HashMap<String,Class>();
@@ -25,12 +28,18 @@ public final class ComponentLookup {
 		return cl;
 	}
 	
-	public<T extends Appliance> ComponentName getComponentName(Class<T> appType, String componentName){
-		if (appType == null || componentName == null) return null;
+	/**
+	 * Takes a string and returns corresponding {@linkplain ComponentName}
+	 * @param appType the class of an appliance
+	 * @param cname String representation of a component
+	 * @return The {@link Appliance.ComponentName} represented by {@link cname}
+	 */
+	public<T extends Appliance> ComponentName getComponentName(Class<T> appType, String cname){
+		if (appType == null || cname == null) return null;
 		for (Class clazz : appType.getDeclaredClasses()){
 			if (!(clazz.isEnum())) continue;
 			for (Object component: clazz.getEnumConstants())
-				if (((Enum) component).name().equals(componentName))
+				if (((Enum) component).name().equals(cname))
 					return (ComponentName)component;
 		}
 		return null;

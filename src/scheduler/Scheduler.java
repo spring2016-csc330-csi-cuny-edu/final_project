@@ -1,16 +1,19 @@
 package scheduler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.DelayQueue;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * Handles {@link Event}s: adding, executing, and canceling.
+ */
 public class Scheduler {
 	private final static Scheduler s = new Scheduler();
 	private static int nextEID = 0;
 	private static DelayQueue<Event> events = new DelayQueue<Event>();
 	private static Thread executer;
 	
+	/**
+	 * Static initializer creates and starts thread to execute events.
+	 */
 	{
 	 executer =  new Thread(new Runnable() {
 		        public void run() {
@@ -30,14 +33,21 @@ public class Scheduler {
 	 executer.setDaemon(true);
 	 executer.start();
 	}
-
-	
 	private Scheduler(){
 		events = new DelayQueue<Event>();
 	}
+	
+	private Event getEvent(int eid){
+		for (Event e: events)
+			if (e.getEID()==eid)
+				return e;
+		return null;
+	}
+	
 	public static Scheduler getInstance(){
 		return s;
 	}
+	
 	public int addEvent(Event e){
 		if (!events.add(e))
 			return -1;
@@ -45,6 +55,7 @@ public class Scheduler {
 		nextEID++;
 		return nextEID -1;
 	}
+	
 	public boolean exeEvent(int eid){
 		Event found = getEvent(eid);
 		if (found==null) return false;
@@ -52,12 +63,7 @@ public class Scheduler {
 		events.remove(found);
 		return true;
 	}
-	private Event getEvent(int eid){
-		for (Event e: events)
-			if (e.getEID()==eid)
-				return e;
-		return null;
-	}
+	
 	public boolean cancelEvent(int eid){
 		Event found = getEvent(eid);
 		if (found==null) return false;
